@@ -23,13 +23,13 @@ $(document).ready(function()
 		=============================*/
 		var card;
 		for (var h = 2; h<=10; h++) {
-			card = new Card("Hearts", h, h);
+			card = new Card("h", h, h);
 			this.cards.push(card);
 		}
-		this.cards.push(new Card("Hearts","Jack", 10));
-		this.cards.push(new Card("Hearts","Queen", 10));
-		this.cards.push(new Card("Hearts","King", 10));
-		this.cards.push(new Card("Hearts","Ace", 11));
+		this.cards.push(new Card("h","Jack", 10));
+		this.cards.push(new Card("h","Queen", 10));
+		this.cards.push(new Card("h","King", 10));
+		this.cards.push(new Card("h","Ace", 11));
 
 	
 
@@ -38,39 +38,39 @@ $(document).ready(function()
 		=============================*/
 		var cardClubs;
 		for (var c = 13; c<=21; c++) {
-			cardClubs = new Card("Clubs", (c-11), (c-11));
+			cardClubs = new Card("c", (c-11), (c-11));
 			this.cards.push(cardClubs);
 		}
-		this.cards.push(new Card("Clubs","Jack", 10));
-		this.cards.push(new Card("Clubs","Queen", 10));
-		this.cards.push(new Card("Clubs","King", 10));
-		this.cards.push(new Card("Clubs","Ace", 11));
+		this.cards.push(new Card("c","Jack", 10));
+		this.cards.push(new Card("c","Queen", 10));
+		this.cards.push(new Card("c","King", 10));
+		this.cards.push(new Card("c","Ace", 11));
 
 		/*=============================
 		DIAMONDS
 		=============================*/
 		var cardDiamonds;
 		for (var d = 24; d<=32; d++) {
-			cardDiamonds = new Card("Diamonds", (d-22), (d-22));
+			cardDiamonds = new Card("d", (d-22), (d-22));
 			this.cards.push(cardDiamonds);
 		}
-		this.cards.push(new Card("Diamonds","Jack", 10));
-		this.cards.push(new Card("Diamonds","Queen", 10));
-		this.cards.push(new Card("Diamonds","King", 10));
-		this.cards.push(new Card("Diamonds","Ace", 11));
+		this.cards.push(new Card("d","Jack", 10));
+		this.cards.push(new Card("d","Queen", 10));
+		this.cards.push(new Card("d","King", 10));
+		this.cards.push(new Card("d","Ace", 11));
 
 		/*=============================
 		SPADES
 		=============================*/
 		var cardSpades;
 		for (var s = 35; s<=43; s++) {
-			cardSpades = new Card("Spades", (s-33), (s-33));
+			cardSpades = new Card("s", (s-33), (s-33));
 			this.cards.push(cardSpades);
 		}
-		this.cards.push(new Card("Spades","Jack", 10));
-		this.cards.push(new Card("Spades","Queen", 10));
-		this.cards.push(new Card("Spades","King", 10));
-		this.cards.push(new Card("Spades","Ace", 11));
+		this.cards.push(new Card("s","Jack", 10));
+		this.cards.push(new Card("s","Queen", 10));
+		this.cards.push(new Card("s","King", 10));
+		this.cards.push(new Card("s","Ace", 11));
 
 
 	    // for (var i=0; i<deck.length; i++) {
@@ -175,7 +175,9 @@ $(document).ready(function()
 	var deck = new Deck();
 
 	
-
+	/*=============================
+	INITIAL DEAL FUNCTION
+	=============================*/
 	var giveTwoCards = function() {
 		deck.shuffle();
 		deck.dealInitialTwoCards(player);
@@ -184,9 +186,8 @@ $(document).ready(function()
 		console.log(player.playersHand);
 		console.log(dealer.playersHand);
 	};
+
 	$("#deal").click(giveTwoCards);
-
-
 
 
 	/*=============================
@@ -215,16 +216,73 @@ $(document).ready(function()
 	/*=============================
 	PLAY AGAIN FUNCTION
 	=============================*/
-	var playAgain = function() {
+	var playAgain = function(z) {
 
-		player.playersHand = [];
-		dealer.playersHand = [];
+		for(var r=0; r<=player.playersHand.length; r++) {
+			var hand = player.playersHand[r].pop();
+			deck.cards.push(hand);
+		}
+
+		for(var s=0; s<=dealer.playersHand.length; s++) {
+			var hand2 = dealer.playersHand[r].pop();
+			deck.cards.push(hand2);
+		}
 
 		console.log(player.playersHand);
 		console.log(dealer.playersHand);
+		console.log(deck);
 	};
 
 	$("#playAgain").click(playAgain);
+
+	/*=============================
+	CHANGE CARD PIC FUNCTION
+	=============================*/
+	//player deal card 0
+	$("#deal").click(function() {
+		$("#playerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
+	});
+
+	//player deal card 1
+	$("#deal").click(function() {
+		$("#playerCard1").attr("src","playingcards/" + player.playersHand[1].suit + player.playersHand[1].rank + ".gif");
+	});
+
+	//dealer card 0 face up
+	$("#deal").click(function() {
+		$("#dealerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
+	});
+
+	//dealer card 1 face down
+	$("#deal").click(function() {
+		$("#dealerCard1").attr("src","playingcards/b2fv.gif");
+	});
+
+	//player hit card 2
+	$("#hit").click(function() {
+		$("#playerCard2").attr("src","playingcards/" + player.playersHand[2].suit + player.playersHand[2].rank + ".gif");
+	});
+
+	//player stand
+	$("#stand").click(function() {
+		$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+	});
+
+	$("#stand").click(function() {
+		$("#dealerCard2").attr("src","playingcards/" + dealer.playersHand[2].suit + dealer.playersHand[2].rank + ".gif");
+	});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 });  // ready

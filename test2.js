@@ -80,10 +80,22 @@ $("#stand").click(function() {
 
 
 
+Player.prototype.addToHand = function(card) {
+			this.playersHand.push(card);
+			var n = this.playersHand.length - 1;
+			$("#playerCard" + n).attr("src","playingcards/" + card.suit + card.rank + ".gif");
+
+		};
 
 
+Deck.prototype.dealInitialTwoCards = function(player) {
+			//var twoCards= [];
+			var card1 = this.cards.pop();
+			var card2 = this.cards.pop();
+			player.addToHand(card1);
+			player.addToHand(card2);	
 
-
+		};
 
 
 

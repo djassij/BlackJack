@@ -121,13 +121,15 @@ $(document).ready(function()
 		this.total= 0; 
 		var player = this;
 		
-
+		/*=============================
+		MAKE BET FUNCTION
+		=============================*/
 		var getBetValue = function() {
 			
 		 	player.bet = $("#betAmount").val();
 		 	player.bankRoll = player.bankRoll - player.bet;
-		 	console.log("myBet = " + player.bet);
-		 	console.log("bankRoll= " + player.bankRoll);
+		 	$('#bankRoll').append("<p>" + player.bankRoll + "</p>");
+		 	$('#bet').append("<p>" + player.bet + "</p>");
 		};
 
 		$("#submitBet").click(getBetValue);		
@@ -141,7 +143,7 @@ $(document).ready(function()
 		};
 
 		/*=============================
-		MAKE BET FUNCTION
+		CALCULATE TOTAL FUNCTION
 		=============================*/
 
 		Player.prototype.calculateTotalValueOfHandPlayer = function(array) {

@@ -1,0 +1,101 @@
+//player deal card 0
+	$("#deal").click(function() {
+		$("#playerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
+	});
+
+	//player deal card 1
+	$("#deal").click(function() {
+		$("#playerCard1").attr("src","playingcards/" + player.playersHand[1].suit + player.playersHand[1].rank + ".gif");
+	});
+
+	//dealer card 0 face up
+	$("#deal").click(function() {
+		$("#dealerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
+	});
+
+	//dealer card 1 face down
+	$("#deal").click(function() {
+		$("#dealerCard1").attr("src","playingcards/b2fv.gif");
+	});
+
+	var showDealtCards = function() {
+		$("#playerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
+
+		$("#playerCard1").attr("src","playingcards/" + player.playersHand[1].suit + player.playersHand[1].rank + ".gif");
+
+		$("#dealerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
+	
+		$("#dealerCard1").attr("src","playingcards/b2fv.gif");
+	};
+
+	$("#deal").click(showDealtCards);
+//===========================================================================================================================
+//===========================================================================================================================
+//===========================================================================================================================
+	//player hit card 2
+var hitAgain = function(i, player) {
+	$("#playerCard" + player.playerHand.length).attr("src","playingcards/" + player.playersHand[player.playerHand.length].suit + player.playersHand[player.playerHand.length].rank + ".gif");
+};
+
+	var hitClickedOnce = 0;
+
+	$("#hit").click(function() {
+		$("#playerCard2").attr("src","playingcards/" + player.playersHand[2].suit + player.playersHand[2].rank + ".gif");
+		hitClickedOnce = hitClickedOnce + 1;
+		
+		if (hitClickedOnce === 1) {
+			$("#hit").click(hitAgain);
+		}
+	});
+
+
+
+	var showHitCards = function() {
+		$("#playerCard" + player.playersHand.length).attr("src","playingcards/" + player.playersHand[player.playersHand.length].suit + player.playersHand[player.playersHand.length].rank + ".gif");
+	};
+
+	$("#hit").click(showHitCards);
+//===========================================================================================================================
+//===========================================================================================================================
+//===========================================================================================================================
+$("#stand").click(function() {
+		$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+	});
+
+	$("#stand").click(function() {
+		$("#dealerCard2").attr("src","playingcards/" + dealer.playersHand[2].suit + dealer.playersHand[2].rank + ".gif");
+	});
+
+	var showStandCards = function() {
+		$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+
+		$("#dealerCard2").attr("src","playingcards/" + dealer.playersHand[2].suit + dealer.playersHand[2].rank + ".gif");
+	};
+
+	$("#stand").click(showStandCards);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

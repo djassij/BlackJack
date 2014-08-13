@@ -94,9 +94,6 @@ $(document).ready(function()
 	    	}
 		};
 
-		/*=============================
-		DEAL FUNCTION
-		=============================*/
 		Deck.prototype.dealInitialTwoCards = function(p) {
 			//var twoCards= [];
 			var card1 = this.cards.pop();
@@ -106,9 +103,6 @@ $(document).ready(function()
 
 		};
 
-		/*=============================
-		HIT FUNCTION
-		=============================*/
 		Deck.prototype.hitMe = function (p) {
 			var cardHit = this.cards.pop();
 			p.playersHand.push(cardHit);
@@ -127,9 +121,7 @@ $(document).ready(function()
 		this.total= 0; 
 		var player = this;
 		
-		/*=============================
-		MAKE BET FUNCTION
-		=============================*/
+
 		var getBetValue = function() {
 			
 		 	player.bet = $("#betAmount").val();
@@ -148,10 +140,10 @@ $(document).ready(function()
 			console.log(this.hand);
 		};
 
-		
 		/*=============================
-		CALCULATE VALUE FUNCTIONS
+		MAKE BET FUNCTION
 		=============================*/
+
 		Player.prototype.calculateTotalValueOfHandPlayer = function(array) {
 			playerTotal = 0;
 			for (var t= 0; t<player.playersHand.length; t++) {
@@ -175,19 +167,56 @@ $(document).ready(function()
 	var deck = new Deck();
 
 	
-	/*=============================
-	INITIAL DEAL FUNCTION
-	=============================*/
+	/*===================================================
+	DEAL!!!
+	===================================================*/
 	var giveTwoCards = function() {
 		deck.shuffle();
 		deck.dealInitialTwoCards(player);
 		deck.dealInitialTwoCards(dealer);
-		console.log(deck);
-		console.log(player.playersHand);
-		console.log(dealer.playersHand);
-	};
+		player.calculateTotalValueOfHandPlayer(player.playersHand);
+		dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 
+		if (playerTotal ===  21 && dealerTotal <21) {
+			console.log(player.playersHand);
+			console.log(dealer.playersHand);
+			// console.log("BLACKJACK!!");
+			// player.bankRoll+= (player.bet * 2);
+			// console.log(player.bankRoll);
+			for (var y=0; y<dealer.playersHand.length; y++); {
+				deck.hitMe(dealer);
+				dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+			
+				if (dealerTotal<21) {
+					deck.hitMe(dealer);
+					dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+				} 
+				if (dealerTotal===21) {
+					console.log("You Lose!");
+				}
+			}
+		}
+		if (playerTotal === 21 && dealerTotal ===21) {
+			console.log(player.playersHand);
+			console.log(dealer.playersHand);
+			console.log("You Lose!");
+		}
+		if (playerTotal<21 && dealerTotal<=21) {
+			console.log(player.playersHand);
+			console.log(dealer.playersHand);
+			console.log("Do you want to hit or stand?");
+		}
+
+			console.log(playerTotal);
+			console.log(dealerTotal);
+
+
+		// console.log(deck);
+	};
 	$("#deal").click(giveTwoCards);
+
+
+
 
 
 	/*=============================
@@ -196,8 +225,47 @@ $(document).ready(function()
 	var hit = function() {
 		deck.hitMe(player);
 		player.calculateTotalValueOfHandPlayer(player.playersHand);
-		console.log(player.playersHand);
-		console.log(playerTotal);
+
+		if (playerTotal === 21 && dealerTotal=== 21) {
+
+			console.log(player.playersHand);
+			console.log(playerTotal);
+			console.log("You Lose!");
+		}
+		if (playerTotal === 21 && dealerTotal<21) {
+			for (var y=0; y<dealer.playersHand.length; y++); {
+				deck.hitMe(dealer);
+				dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+			
+				if (dealerTotal<21) {
+					deck.hitMe(dealer);
+					dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+				} 
+				if (dealerTotal===21) {
+					console.log("You Lose!");
+				}
+			}
+			console.log(player.playersHand);
+			console.log(playerTotal);
+			// deck.hitMe(dealer);
+			// dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+			console.log(dealerTotal);
+		}
+		if (playerTotal<21 && dealerTotal<=21) {
+			console.log(player.playersHand);
+			console.log(playerTotal);
+			console.log("Do you want to hit or stand?");
+		}
+		if (playerTotal>21 && dealerTotal<=21) {
+			console.log(player.playersHand);
+			console.log(playerTotal);
+			console.log("You Lose!");
+
+		}
+
+
+		// console.log(player.playersHand);
+		// console.log(playerTotal);
 	};
 	$("#hit").click(hit);
 
@@ -205,8 +273,38 @@ $(document).ready(function()
 	STAND FUNCTION
 	=============================*/
 	var stand = function() {
-		deck.hitMe(dealer);
-		dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+		// deck.hitMe(dealer);
+		// dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+
+		if (playerTotal<21 && (dealerTotal>=playerTotal && dealerTotal<=21)) {
+			console.log("You Lose!");
+		}
+		if (playerTotal<=21 && dealerTotal<playerTotal) {
+			for (var y=0; y<=dealer.playersHand.length; y++); {
+				deck.hitMe(dealer);
+				dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+			
+				if (dealerTotal<21) {
+					deck.hitMe(dealer);
+					dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+				} 
+				if (dealerTotal===21 || (dealerTotal>playerTotal && dealerTotal<21)) {
+					console.log("You Lose!");
+				}
+			}
+		}
+		if (playerTotal<=21 && dealerTotal>21) {
+			console.log("You Win!");
+			player.bankRoll+= (player.bet * 2);
+			console.log(player.bankRoll);
+		}
+		if (playerTotal=== 21 && dealerTotal=== 21) {
+			console.log("You Lose!");
+			player.bankRoll+= (player.bet * 2);
+			console.log(player.bankRoll);
+		}
+
+
 		console.log(dealer.playersHand);
 		console.log(dealerTotal);
 	};
@@ -216,17 +314,10 @@ $(document).ready(function()
 	/*=============================
 	PLAY AGAIN FUNCTION
 	=============================*/
-	var playAgain = function(z) {
+	var playAgain = function() {
 
-		for(var r=0; r<=player.playersHand.length; r++) {
-			var hand = player.playersHand[r].pop();
-			deck.cards.push(hand);
-		}
-
-		for(var s=0; s<=dealer.playersHand.length; s++) {
-			var hand2 = dealer.playersHand[r].pop();
-			deck.cards.push(hand2);
-		}
+		player.playersHand = [];
+		dealer.playersHand = [];
 
 		console.log(player.playersHand);
 		console.log(dealer.playersHand);
@@ -238,51 +329,30 @@ $(document).ready(function()
 	/*=============================
 	CHANGE CARD PIC FUNCTION
 	=============================*/
-	//player deal card 0
-	$("#deal").click(function() {
+	//show player and dealer cards when deal is clicked
+	var showDealtCards = function() {
 		$("#playerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
-	});
-
-	//player deal card 1
-	$("#deal").click(function() {
 		$("#playerCard1").attr("src","playingcards/" + player.playersHand[1].suit + player.playersHand[1].rank + ".gif");
-	});
-
-	//dealer card 0 face up
-	$("#deal").click(function() {
-		$("#dealerCard0").attr("src","playingcards/" + player.playersHand[0].suit + player.playersHand[0].rank + ".gif");
-	});
-
-	//dealer card 1 face down
-	$("#deal").click(function() {
+		$("#dealerCard0").attr("src","playingcards/" + dealer.playersHand[0].suit + dealer.playersHand[0].rank + ".gif");
 		$("#dealerCard1").attr("src","playingcards/b2fv.gif");
-	});
+	};
 
+	$("#deal").click(showDealtCards);
+//==============================================================================================================================
 	//player hit card 2
 	$("#hit").click(function() {
 		$("#playerCard2").attr("src","playingcards/" + player.playersHand[2].suit + player.playersHand[2].rank + ".gif");
 	});
 
+//==============================================================================================================================
 	//player stand
-	$("#stand").click(function() {
+	var showStandCards = function() {
 		$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
-	});
 
-	$("#stand").click(function() {
 		$("#dealerCard2").attr("src","playingcards/" + dealer.playersHand[2].suit + dealer.playersHand[2].rank + ".gif");
-	});
 
+	};
 
-
-
-
-
-
-
-
-
-
-
-
+	$("#stand").click(showStandCards);
 
 });  // ready

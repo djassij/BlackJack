@@ -9,6 +9,7 @@ input {
 	font-size: 18px;
 	background: black;
 	color: white;
+	font-family: 'Bree Serif', serif;
 }
 header{
 	float: left;
@@ -17,21 +18,68 @@ header{
 	width: 100%;
 	background-color: black;
 	color: white;
+	font-family: 'Bangers', serif;
+	font-weight: 500;
 }
 h1 {
-	font-size: 1.75em;
-	font-family: helvetica;
+	font-size: 35px;
 	margin: 15px 0;
 	font-weight: normal;
 	line-height: 0.8em;
 }
 h2 {
-	font-size: 18px;
-	font-family: helvetica;
+	font-size: 20px;
 	margin: 5px 0 0;
 	font-weight: normal;
 	padding: 10px;
 }
 #playButton {
 	text-decoration: none;
+}
+ul {
+	float: left;
+	text-align: center;
+	padding: 10px;
+	margin: 15px 0;
+	width: 100%;
+	text-decoration: none;
+	list-style: none;
+}
+img {
+	max-width: 100%;
+}
+li {
+	display: inline-block;
+	font-family: 'Bree Serif', serif;
+	margin: .5%;
+	padding: 1%;
+}
+#facedown {
+	color: green;
+}
+#player {
+	padding: 15px;
+	font-family: 'Bree Serif', serif;
+	color: white;
+	font-size: 18px;
+}
+#dealer {
+	padding: 15px;
+	font-family: 'Bree Serif', serif;
+	color: white;
+	font-size: 18px;
+}
+#bottom {
+	background-color: black;
+	float: left;
+	margin: 0 0 20px 0;
+	padding: 5px 0 0 0;
+	width: 100%;
+	font-family: 'Bree Serif', serif;
+	color: white;
+	font-size: 28px;
+	text-decoration: none;
+	list-style: none;
+	display: inline-block;
+	text-align: center;
 }

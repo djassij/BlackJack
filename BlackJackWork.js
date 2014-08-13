@@ -24,12 +24,12 @@ $(document).ready(function()
 		var card;
 		for (var h = 2; h<=10; h++) {
 			card = new Card("Hearts", h, h);
-			cards.push(card);
+			this.cards.push(card);
 		}
-		cards.push(new Card("Hearts","Jack", 10));
-		cards.push(new Card("Hearts","Queen", 10));
-		cards.push(new Card("Hearts","King", 10));
-		cards.push(new Card("Hearts","Ace", 11));
+		this.cards.push(new Card("Hearts","Jack", 10));
+		this.cards.push(new Card("Hearts","Queen", 10));
+		this.cards.push(new Card("Hearts","King", 10));
+		this.cards.push(new Card("Hearts","Ace", 11));
 
 	
 
@@ -39,12 +39,12 @@ $(document).ready(function()
 		var cardClubs;
 		for (var c = 13; c<=21; c++) {
 			cardClubs = new Card("Clubs", (c-11), (c-11));
-			cards.push(cardClubs);
+			this.cards.push(cardClubs);
 		}
-		cards.push(new Card("Clubs","Jack", 10));
-		cards.push(new Card("Clubs","Queen", 10));
-		cards.push(new Card("Clubs","King", 10));
-		cards.push(new Card("Clubs","Ace", 11));
+		this.cards.push(new Card("Clubs","Jack", 10));
+		this.cards.push(new Card("Clubs","Queen", 10));
+		this.cards.push(new Card("Clubs","King", 10));
+		this.cards.push(new Card("Clubs","Ace", 11));
 
 		/*=============================
 		DIAMONDS
@@ -52,12 +52,12 @@ $(document).ready(function()
 		var cardDiamonds;
 		for (var d = 24; d<=32; d++) {
 			cardDiamonds = new Card("Diamonds", (d-22), (d-22));
-			cards.push(cardDiamonds);
+			this.cards.push(cardDiamonds);
 		}
-		cards.push(new Card("Diamonds","Jack", 10));
-		cards.push(new Card("Diamonds","Queen", 10));
-		cards.push(new Card("Diamonds","King", 10));
-		cards.push(new Card("Diamonds","Ace", 11));
+		this.cards.push(new Card("Diamonds","Jack", 10));
+		this.cards.push(new Card("Diamonds","Queen", 10));
+		this.cards.push(new Card("Diamonds","King", 10));
+		this.cards.push(new Card("Diamonds","Ace", 11));
 
 		/*=============================
 		SPADES
@@ -65,63 +65,77 @@ $(document).ready(function()
 		var cardSpades;
 		for (var s = 35; s<=43; s++) {
 			cardSpades = new Card("Spades", (s-33), (s-33));
-			cards.push(cardSpades);
+			this.cards.push(cardSpades);
 		}
-		cards.push(new Card("Spades","Jack", 10));
-		cards.push(new Card("Spades","Queen", 10));
-		cards.push(new Card("Spades","King", 10));
-		cards.push(new Card("Spades","Ace", 11));
+		this.cards.push(new Card("Spades","Jack", 10));
+		this.cards.push(new Card("Spades","Queen", 10));
+		this.cards.push(new Card("Spades","King", 10));
+		this.cards.push(new Card("Spades","Ace", 11));
 
 
 	    // for (var i=0; i<deck.length; i++) {
 	    // 	console.log(deck[i].suit + ", " + deck[i].rank + ", " + deck[i].val);
-	    // }
+	 
+	 }  //  --------------- Deck ----------------------------
+
 
 	    /*=============================
 		SHUFFLE FUNCTION
 		=============================*/
-	    Deck.prototype.shuffle = function(array) 
+	    Deck.prototype.shuffle = function() 
 	    {
 	        var r1, r2, temp; 
 	    	for(i=0; i<=100; i++) {
-	    		
-	    		r1 = Math.floor(Math.random() * cards.length);
-	    		r2 = Math.floor(Math.random() * cards.length);   		
-	    		temp = cards[r1];
-	    		cards[r1] = cards[r2];
-	    		cards[r2] = temp;
+	    		r1 = Math.floor(Math.random() * this.cards.length);
+	    		r2 = Math.floor(Math.random() * this.cards.length);   		
+	    		temp = this.cards[r1];
+	    		this.cards[r1] = this.cards[r2];
+	    		this.cards[r2] = temp;
 	    	}
 		};
 
-		Deck.prototype.deal = function() {
-			shuffle(cards);
-			
-			console.log(playersHand);
-			console.log(dealersHand);
+		/*=============================
+		DEAL FUNCTION
+		=============================*/
+		Deck.prototype.dealInitialTwoCards = function(p) {
+			//var twoCards= [];
+			var card1 = this.cards.pop();
+			var card2 = this.cards.pop();
+			p.playersHand.push(card1);
+			p.playersHand.push(card2);	
+
 		};
 
-	$("#deal").click(deal);
+		/*=============================
+		HIT FUNCTION
+		=============================*/
+		Deck.prototype.hitMe = function (p) {
+			var cardHit = this.cards.pop();
+			p.playersHand.push(cardHit);
+		};
 
-	}
+
+	
     
     /*====================================================
 	PLAYER CLASS
 	====================================================*/
 	function Player () {
-		this.hand = [];
-		this.total = 0;
+		this.playersHand = [];
 		this.bankRoll = 1000;
 		this.bet = 0;
+		this.total= 0; 
 		var player = this;
 		
-
+		/*=============================
+		MAKE BET FUNCTION
+		=============================*/
 		var getBetValue = function() {
 			
 		 	player.bet = $("#betAmount").val();
 		 	player.bankRoll = player.bankRoll - player.bet;
 		 	console.log("myBet = " + player.bet);
 		 	console.log("bankRoll= " + player.bankRoll);
-		 	
 		};
 
 		$("#submitBet").click(getBetValue);		
@@ -134,13 +148,22 @@ $(document).ready(function()
 			console.log(this.hand);
 		};
 
+		
 		/*=============================
-		MAKE BET FUNCTION
+		CALCULATE VALUE FUNCTIONS
 		=============================*/
-		Player.prototype.getBet = function()
-		{ 
-			/* when place bet is clicked, take whatever value is in "Enter bet here" box and save it as this.bet
-			*/
+		Player.prototype.calculateTotalValueOfHandPlayer = function(array) {
+			playerTotal = 0;
+			for (var t= 0; t<player.playersHand.length; t++) {
+				playerTotal += player.playersHand[t].val;
+			}
+		};
+
+		Player.prototype.calculateTotalValueOfHandDealer = function(array) {
+			dealerTotal = 0;
+			for (var z= 0; z<dealer.playersHand.length; z++) {
+				dealerTotal += dealer.playersHand[z].val;
+			}
 		};
 
 	
@@ -150,67 +173,41 @@ $(document).ready(function()
     var player = new Player();
     var dealer = new Player();
 	var deck = new Deck();
-	var original2CardsDealt;
 
-	original2CardsDealt = deck.dealInitialTwocards(); // Returns an array of cards
-	player.addCards(original2CardsDealt); // Pass original 2 cards to player
-	original2CardsDealt = deck.dealInitialTwocards(); // Returns an array of cards
-	dealer.addCards(original2CardsDealt); // Pass original 2 cards to player
-    
+	
 
-
-    	// p.myBet = $("#submitBet").click(function() {
-			 	// bet = $("#betAmount").val();
-			 	// console.log("bet = " + bet);
-			 	// return bet;
-	    //   });
+	var giveTwoCards = function() {
+		deck.shuffle();
+		deck.dealInitialTwoCards(player);
+		deck.dealInitialTwoCards(dealer);
+		console.log(deck);
+		console.log(player.playersHand);
+		console.log(dealer.playersHand);
+	};
+	$("#deal").click(giveTwoCards);
 
 
-    
 
-
-	/*=============================
-	DEAL FUNCTION
-	=============================*/
-	// var deal = function() {
-	// 	shuffle(cards);
-	// 	playersHand = [cards[0], cards[1]];
-	// 	dealersHand = [cards[2]];
-		
-	// 	console.log(playersHand);
-	// 	console.log(dealersHand);
-	// };
-
-	// $("#deal").click(deal);
 
 	/*=============================
 	HIT FUNCTION
 	=============================*/
 	var hit = function() {
-
-		playersHand = [cards[0], cards[1], cards[4]];
-		dealersHand = [cards[2], cards[3]];
-
-		console.log(playersHand);
-		console.log(dealersHand);
-
-		//console.log("You Win!");
+		deck.hitMe(player);
+		player.calculateTotalValueOfHandPlayer(player.playersHand);
+		console.log(player.playersHand);
+		console.log(playerTotal);
 	};
-
 	$("#hit").click(hit);
 
 	/*=============================
 	STAND FUNCTION
 	=============================*/
 	var stand = function() {
-
-		playersHand = [cards[0], cards[1]];
-		dealersHand = [cards[2], cards[3]];
-
-		console.log(playersHand);
-		console.log(dealersHand);
-
-		//console.log("You Lose!");
+		deck.hitMe(dealer);
+		dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+		console.log(dealer.playersHand);
+		console.log(dealerTotal);
 	};
 
 	$("#stand").click(stand);
@@ -220,12 +217,11 @@ $(document).ready(function()
 	=============================*/
 	var playAgain = function() {
 
-		playersHand = [];
-		dealersHand = [];
-		yourBet = 0;
+		player.playersHand = [];
+		dealer.playersHand = [];
 
-		console.log(playersHand);
-		console.log(dealersHand);
+		console.log(player.playersHand);
+		console.log(dealer.playersHand);
 	};
 
 	$("#playAgain").click(playAgain);

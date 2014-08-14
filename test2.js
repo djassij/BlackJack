@@ -37,6 +37,10 @@ var hitAgain = function() {
 	$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
 };
 
+var hitAgainAgain = function() {
+	$("#playerCard4").attr("src","playingcards/" + player.playersHand[4].suit + player.playersHand[4].rank + ".gif");
+};
+
 	var hitClickedOnce = 0;
 
 	$("#hit").click(function() {
@@ -45,6 +49,11 @@ var hitAgain = function() {
 		
 		if (hitClickedOnce === 1) {
 			$("#hit").click(hitAgain);
+			hitClickedOnce = 2;
+		}
+
+		if (hitClickedOnce === 2) {
+			$("hit").click(hitAgainAgain);
 		}
 	});
 

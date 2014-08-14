@@ -108,6 +108,20 @@ $(document).ready(function()
 			p.playersHand.push(cardHit);
 		};
 
+		Deck.prototype.playAgainPlayer = function(a) {
+			for(var e=0; e<=a.playersHand.length +1; e++) {
+				var playerCard = a.playersHand.pop();
+				this.cards.push(playerCard);
+			}
+		};
+
+		Deck.prototype.playAgainDealer = function(d) {
+			for(var q=0; q<=d.playersHand.length +1; q++) {
+				var dealerCard = d.playersHand.pop();
+				this.cards.push(dealerCard);
+			}
+		};
+
 
 	
     
@@ -232,6 +246,7 @@ $(document).ready(function()
 	var hit = function() {
 		deck.hitMe(player);
 		player.calculateTotalValueOfHandPlayer(player.playersHand);
+		dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 
 		if (playerTotal === 21 && dealerTotal=== 21) {
 
@@ -249,6 +264,13 @@ $(document).ready(function()
 					deck.hitMe(dealer);
 					dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 				} 
+					if (dealerTotal>21) {
+						console.log("You Win!");
+						player.bankRoll+=(player.bet *2);
+						console.log(player.bankRoll);
+						$('#winOrLose').append("<p>YOU WIN!!!</p>");
+
+					}
 				if (dealerTotal===21) {
 					console.log("You Lose!");
 					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
@@ -335,9 +357,9 @@ $(document).ready(function()
 	PLAY AGAIN FUNCTION
 	=============================*/
 	var playAgain = function() {
-
-		player.playersHand = [];
-		dealer.playersHand = [];
+		deck.playAgainPlayer(player);
+		deck.playAgainDealer(dealer);
+		deck.shuffle();
 
 		console.log(player.playersHand);
 		console.log(dealer.playersHand);
@@ -360,19 +382,32 @@ $(document).ready(function()
 	$("#deal").click(showDealtCards);
 //==============================================================================================================================
 	//player hit card 2
+	var hitClickedOnce = 0;
+
 	var hitAgain = function() {
 	$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
 	};
 
-	var hitClickedOnce = 0;
-
+	var hitAgainAgain = function() {
+	$("#playerCard4").attr("src","playingcards/" + player.playersHand[4].suit + player.playersHand[4].rank + ".gif");
+	};
+	
 	$("#hit").click(function() {
 		$("#playerCard2").attr("src","playingcards/" + player.playersHand[2].suit + player.playersHand[2].rank + ".gif");
 		hitClickedOnce = hitClickedOnce + 1;
 		
 		if (hitClickedOnce === 1) {
 			$("#hit").click(hitAgain);
+			hitClickedOnce = hitClickedOnce + 1;
 		}
+		
+		if(hitClickedOnce === 2) {
+			$("hit").click(hitAgainAgain);
+		}
+
+		/*if (hitClickedOnce === 2) {
+			$("hit").click(hitAgainAgain);
+		}*/
 	});
 
 //==============================================================================================================================

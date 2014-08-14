@@ -205,6 +205,7 @@ $(document).ready(function()
 			// console.log("BLACKJACK!!");
 			// player.bankRoll+= (player.bet * 2);
 			// console.log(player.bankRoll);
+
 			for (var y=0; y<dealer.playersHand.length; y++); {
 				deck.hitMe(dealer);
 				dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
@@ -217,10 +218,10 @@ $(document).ready(function()
 					console.log("You Lose!");
 					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 				}
-				if (dealerTotal>21) {
-					console.log("You Lose!");
-					$('#winOrLose').append("<p>YOU WIN!!!</p>");
-				}
+				// if (dealerTotal>21) {
+				// 	console.log("You Win!");
+				// 	$('#winOrLose').append("<p>YOU WIN!!!</p>");
+				// }
 				if (dealerTotal>21 && dealer.hasAnAce===true) {
 					dealerTotal=dealerTotal-10;
 				}

@@ -5,7 +5,7 @@ body {
 input {
 	border: 2;
 	border-color: white;
-	padding: 5px;
+	padding: 2.5px;
 	font-size: 18px;
 	background: black;
 	color: white;
@@ -14,7 +14,7 @@ input {
 header{
 	float: left;
 	margin: 0 0 30px 0;
-	padding: 5px 0 0 0;
+	padding: 2.5px;
 	width: 100%;
 	background-color: black;
 	color: white;
@@ -31,7 +31,7 @@ h2 {
 	font-size: 20px;
 	margin: 5px 0 0;
 	font-weight: normal;
-	padding: 5px;
+	padding: 2.5px;
 }
 #playButton {
 	text-decoration: none;
@@ -39,7 +39,7 @@ h2 {
 ul {
 	float: left;
 	text-align: center;
-	padding: 5px;
+	padding: 2.5px;
 	margin: 15px 0;
 	width: 100%;
 	text-decoration: none;
@@ -52,19 +52,19 @@ li {
 	display: inline-block;
 	font-family: 'Bree Serif', serif;
 	margin: .5%;
-	padding: 5px;
+	padding: 2.5px;
 }
 #facedown {
 	color: green;
 }
 #player {
-	padding: 10px;
+	padding: 5px;
 	font-family: 'Bree Serif', serif;
 	color: white;
 	font-size: 18px;
 }
 #dealer {
-	padding: 10px;
+	padding: 5px;
 	font-family: 'Bree Serif', serif;
 	color: white;
 	font-size: 18px;
@@ -73,7 +73,7 @@ li {
 	background-color: black;
 	float: left;
 	margin: 0 0 20px 0;
-	padding: 5px 0 0 0;
+	padding: 2.5px 0 0 0;
 	width: 100%;
 	font-family: 'Bree Serif', serif;
 	color: white;
@@ -85,8 +85,11 @@ li {
 }
 #winOrLose {
 	color: black;
-	font-size: 22px;
+	font-size: 80px;
 	font-family: 'Bree Serif', serif;
+	position: fixed;
+	top: 35%;
+	left: 35%;
 }
 #bankAndBet {
 	background-color: white;

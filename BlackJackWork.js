@@ -195,6 +195,7 @@ $(document).ready(function()
 				} 
 				if (dealerTotal===21) {
 					console.log("You Lose!");
+					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 				}
 			}
 		}
@@ -202,6 +203,7 @@ $(document).ready(function()
 			console.log(player.playersHand);
 			console.log(dealer.playersHand);
 			console.log("You Lose!");
+			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 		}
 		if (playerTotal<21 && dealerTotal<=21) {
 			console.log(player.playersHand);
@@ -233,6 +235,7 @@ $(document).ready(function()
 			console.log(player.playersHand);
 			console.log(playerTotal);
 			console.log("You Lose!");
+			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 		}
 		if (playerTotal === 21 && dealerTotal<21) {
 			for (var y=0; y<dealer.playersHand.length; y++); {
@@ -245,6 +248,7 @@ $(document).ready(function()
 				} 
 				if (dealerTotal===21) {
 					console.log("You Lose!");
+					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 				}
 			}
 			console.log(player.playersHand);
@@ -262,6 +266,7 @@ $(document).ready(function()
 			console.log(player.playersHand);
 			console.log(playerTotal);
 			console.log("You Lose!");
+			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 
 		}
 
@@ -280,6 +285,7 @@ $(document).ready(function()
 
 		if (playerTotal<21 && (dealerTotal>=playerTotal && dealerTotal<=21)) {
 			console.log("You Lose!");
+			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 		}
 		if (playerTotal<=21 && dealerTotal<playerTotal) {
 			for (var y=0; y<=dealer.playersHand.length; y++); {
@@ -292,16 +298,19 @@ $(document).ready(function()
 				} 
 				if (dealerTotal===21 || (dealerTotal>playerTotal && dealerTotal<21)) {
 					console.log("You Lose!");
+					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 				}
 			}
 		}
 		if (playerTotal<=21 && dealerTotal>21) {
 			console.log("You Win!");
+			$('#winOrLose').append("<p>YOU WIN!!!</p>");
 			player.bankRoll+= (player.bet * 2);
 			console.log(player.bankRoll);
 		}
 		if (playerTotal=== 21 && dealerTotal=== 21) {
 			console.log("You Lose!");
+			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 			player.bankRoll+= (player.bet * 2);
 			console.log(player.bankRoll);
 		}

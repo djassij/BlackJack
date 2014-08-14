@@ -129,7 +129,6 @@ $(document).ready(function()
 			
 		 	player.bet = $("#betAmount").val();
 		 	player.bankRoll = player.bankRoll - player.bet;
-		 	debugger;
 		 	if(player.name!=="dealer") {
 		 		$('#bankRoll').append("<p>" + player.bankRoll + "</p>");
 		 		$('#bet').append("<p>" + player.bet + "</p>");
@@ -361,8 +360,19 @@ $(document).ready(function()
 	$("#deal").click(showDealtCards);
 //==============================================================================================================================
 	//player hit card 2
+	var hitAgain = function() {
+	$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
+	};
+
+	var hitClickedOnce = 0;
+
 	$("#hit").click(function() {
 		$("#playerCard2").attr("src","playingcards/" + player.playersHand[2].suit + player.playersHand[2].rank + ".gif");
+		hitClickedOnce = hitClickedOnce + 1;
+		
+		if (hitClickedOnce === 1) {
+			$("#hit").click(hitAgain);
+		}
 	});
 
 //==============================================================================================================================

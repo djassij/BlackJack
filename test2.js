@@ -33,8 +33,8 @@
 //===========================================================================================================================
 //===========================================================================================================================
 	//player hit card 2
-var hitAgain = function(i, player) {
-	$("#playerCard" + player.playerHand.length).attr("src","playingcards/" + player.playersHand[player.playerHand.length].suit + player.playersHand[player.playerHand.length].rank + ".gif");
+var hitAgain = function() {
+	$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
 };
 
 	var hitClickedOnce = 0;
@@ -101,7 +101,9 @@ Deck.prototype.dealInitialTwoCards = function(player) {
 
 
 
-
+$("#hit").click(function() {
+		$("#playerCard2").attr("src","playingcards/" + player.playersHand[2].suit + player.playersHand[2].rank + ".gif");
+	});
 
 
 

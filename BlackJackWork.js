@@ -114,11 +114,12 @@ $(document).ready(function()
     /*====================================================
 	PLAYER CLASS
 	====================================================*/
-	function Player () {
+	function Player (name) {
 		this.playersHand = [];
 		this.bankRoll = 1000;
 		this.bet = 0;
-		this.total= 0; 
+		this.total= 0;
+		this.name = name; 
 		var player = this;
 		
 		/*=============================
@@ -128,8 +129,11 @@ $(document).ready(function()
 			
 		 	player.bet = $("#betAmount").val();
 		 	player.bankRoll = player.bankRoll - player.bet;
-		 	$('#bankRoll').append("<p>" + player.bankRoll + "</p>");
-		 	$('#bet').append("<p>" + player.bet + "</p>");
+		 	debugger;
+		 	if(player.name!=="dealer") {
+		 		$('#bankRoll').append("<p>" + player.bankRoll + "</p>");
+		 		$('#bet').append("<p>" + player.bet + "</p>");
+		 	}
 		};
 
 		$("#submitBet").click(getBetValue);		
@@ -164,8 +168,8 @@ $(document).ready(function()
     /*====================================================
 	MAIN IS THE BRAIN!!!!!!!
 	====================================================*/
-    var player = new Player();
-    var dealer = new Player();
+    var player = new Player("jonathan");
+    var dealer = new Player("dealer");
 	var deck = new Deck();
 
 	
@@ -268,6 +272,7 @@ $(document).ready(function()
 			console.log("You Lose!");
 			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 			$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+			//$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
 
 		}
 

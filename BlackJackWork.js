@@ -267,6 +267,7 @@ $(document).ready(function()
 			console.log(playerTotal);
 			console.log("You Lose!");
 			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
+			$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
 
 		}
 
@@ -365,6 +366,8 @@ $(document).ready(function()
 		$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
 
 		$("#dealerCard2").attr("src","playingcards/" + dealer.playersHand[2].suit + dealer.playersHand[2].rank + ".gif");
+
+		$("#dealerCard3").attr("src","playingcards/" + dealer.playersHand[3].suit + dealer.playersHand[3].rank + ".gif");
 
 	};
 

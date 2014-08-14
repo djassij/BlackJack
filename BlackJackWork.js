@@ -134,6 +134,7 @@ $(document).ready(function()
 		this.bet = 0;
 		this.total= 0;
 		this.name = name; 
+		this.hasAnAce = false;
 		var player = this;
 		
 		/*=============================
@@ -199,6 +200,8 @@ $(document).ready(function()
 		if (playerTotal ===  21 && dealerTotal <21) {
 			console.log(player.playersHand);
 			console.log(dealer.playersHand);
+			$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+			$('#winOrLose').append("<p>YOU WIN!!!</p>");
 			// console.log("BLACKJACK!!");
 			// player.bankRoll+= (player.bet * 2);
 			// console.log(player.bankRoll);
@@ -213,6 +216,13 @@ $(document).ready(function()
 				if (dealerTotal===21) {
 					console.log("You Lose!");
 					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
+				}
+				if (dealerTotal>21) {
+					console.log("You Lose!");
+					$('#winOrLose').append("<p>YOU WIN!!!</p>");
+				}
+				if (dealerTotal>21 && dealer.hasAnAce===true) {
+					dealerTotal=dealerTotal-10;
 				}
 			}
 		}
@@ -230,6 +240,9 @@ $(document).ready(function()
 
 			console.log(playerTotal);
 			console.log(dealerTotal);
+		if (playerTotal>21 && player.hasAnAce===true) {
+			playerTotal=playerTotal-10;
+		}
 
 
 		// console.log(deck);
@@ -249,7 +262,6 @@ $(document).ready(function()
 		dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 
 		if (playerTotal === 21 && dealerTotal=== 21) {
-
 			console.log(player.playersHand);
 			console.log(playerTotal);
 			console.log("You Lose!");
@@ -259,18 +271,20 @@ $(document).ready(function()
 			for (var y=0; y<dealer.playersHand.length; y++); {
 				deck.hitMe(dealer);
 				dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
-			
+				
 				if (dealerTotal<21) {
 					deck.hitMe(dealer);
 					dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 				} 
-					if (dealerTotal>21) {
-						console.log("You Win!");
-						player.bankRoll+=(player.bet *2);
-						console.log(player.bankRoll);
-						$('#winOrLose').append("<p>YOU WIN!!!</p>");
-
-					}
+				if (dealerTotal>21) {
+					console.log("You Win!");
+					player.bankRoll+=(player.bet *2);
+					console.log(player.bankRoll);
+					$('#winOrLose').append("<p>YOU WIN!!!</p>");
+				}
+				if (dealerTotal>21 && dealer.hasAnAce===true) {
+					dealerTotal=dealerTotal-10;
+				}
 				if (dealerTotal===21) {
 					console.log("You Lose!");
 					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
@@ -288,14 +302,21 @@ $(document).ready(function()
 			console.log("Do you want to hit or stand?");
 		}
 		if (playerTotal>21 && dealerTotal<=21) {
-			console.log(player.playersHand);
-			console.log(playerTotal);
-			console.log("You Lose!");
+			if(playerTotal>21 && player.hasAnAce===true) {
+				playerTotal=playerTotal-10;
+				//$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
+			}
+		}
+		if(playerTotal>21 && player.hasAnAce===true) {
+				playerTotal=playerTotal-10;
+				//$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
+		}
+		if (playerTotal>21 && dealerTotal<=21) {
 			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
 			$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
-			//$("#playerCard3").attr("src","playingcards/" + player.playersHand[3].suit + player.playersHand[3].rank + ".gif");
-
 		}
+
+
 
 
 		// console.log(player.playersHand);
@@ -334,10 +355,14 @@ $(document).ready(function()
 			}
 		}
 		if (playerTotal<=21 && dealerTotal>21) {
-			console.log("You Win!");
-			$('#winOrLose').append("<p>YOU WIN!!!</p>");
-			player.bankRoll+= (player.bet * 2);
-			console.log(player.bankRoll);
+			if(playerTotal<=21 && (dealerTotal>21 && dealer.hasAnAce===true)) {
+				dealerTotal=dealerTotal-10;
+			}
+			else
+				console.log("You Win!");
+				$('#winOrLose').append("<p>YOU WIN!!!</p>");
+				player.bankRoll+= (player.bet * 2);
+				console.log(player.bankRoll);
 		}
 		if (playerTotal=== 21 && dealerTotal=== 21) {
 			console.log("You Lose!");
@@ -360,6 +385,7 @@ $(document).ready(function()
 		deck.playAgainPlayer(player);
 		deck.playAgainDealer(dealer);
 		deck.shuffle();
+		player.bet = 0;
 
 		console.log(player.playersHand);
 		console.log(dealer.playersHand);
@@ -391,7 +417,7 @@ $(document).ready(function()
 	var hitAgainAgain = function() {
 	$("#playerCard4").attr("src","playingcards/" + player.playersHand[4].suit + player.playersHand[4].rank + ".gif");
 	};
-	
+
 	$("#hit").click(function() {
 		$("#playerCard2").attr("src","playingcards/" + player.playersHand[2].suit + player.playersHand[2].rank + ".gif");
 		hitClickedOnce = hitClickedOnce + 1;

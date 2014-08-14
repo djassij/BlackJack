@@ -185,7 +185,6 @@ $(document).ready(function()
     var player = new Player("jonathan");
     var dealer = new Player("dealer");
 	var deck = new Deck();
-
 	
 	/*===================================================
 	DEAL!!!
@@ -198,20 +197,25 @@ $(document).ready(function()
 		dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 
 		if (playerTotal ===  21 && dealerTotal <21) {
+			//$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
 			console.log(player.playersHand);
 			console.log(dealer.playersHand);
-			$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+			//$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+			//$("#dealerCard2").attr("src","playingcards/" + dealer.playersHand[2].suit + dealer.playersHand[2].rank + ".gif");
 			$('#winOrLose').append("<p>YOU WIN!!!</p>");
-			// console.log("BLACKJACK!!");
-			// player.bankRoll+= (player.bet * 2);
-			// console.log(player.bankRoll);
+			console.log("BLACKJACK!!");
+			player.bankRoll+= (player.bet * 2);
+			console.log(player.bankRoll);
 
-			for (var y=0; y<dealer.playersHand.length; y++); {
-				deck.hitMe(dealer);
-				dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
+			//for (var y=0; y<dealer.playersHand.length; y++); {
+			deck.hitMe(dealer);
+			$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
+			$("#dealerCard2").attr("src","playingcards/" + dealer.playersHand[2].suit + dealer.playersHand[2].rank + ".gif");
+			dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 			
 				if (dealerTotal<21) {
 					deck.hitMe(dealer);
+
 					dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 				} 
 				if (dealerTotal===21) {
@@ -225,13 +229,13 @@ $(document).ready(function()
 				if (dealerTotal>21 && dealer.hasAnAce===true) {
 					dealerTotal=dealerTotal-10;
 				}
-			}
 		}
 		if (playerTotal === 21 && dealerTotal ===21) {
 			console.log(player.playersHand);
 			console.log(dealer.playersHand);
 			console.log("You Lose!");
 			$('#winOrLose').append("<p>YOU LOSE!!!</p>");
+			$("#dealerCard1").attr("src","playingcards/" + dealer.playersHand[1].suit + dealer.playersHand[1].rank + ".gif");
 		}
 		if (playerTotal<21 && dealerTotal<=21) {
 			console.log(player.playersHand);
@@ -448,6 +452,6 @@ $(document).ready(function()
 
 	};
 
-	$("#stand").click(showStandCards);
+	$("#stand").click(showStandCards);	
 
 });  // ready

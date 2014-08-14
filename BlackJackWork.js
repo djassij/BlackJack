@@ -292,7 +292,11 @@ $(document).ready(function()
 				deck.hitMe(dealer);
 				dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 			
-				if (dealerTotal<21) {
+				if (dealerTotal === playerTotal) {
+					console.log("You Lose!");
+					$('#winOrLose').append("<p>YOU LOSE!!!</p>");
+				}
+				if (dealerTotal<21 && dealerTotal<playerTotal) {
 					deck.hitMe(dealer);
 					dealer.calculateTotalValueOfHandDealer(dealer.playersHand);
 				} 
